@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 15f;
     private Transform target;
     private int index = 0;
 
@@ -26,11 +26,12 @@ public class EnemyScript : MonoBehaviour
     }
     void NextWaypoint()
     {
-        if(index>= WaypointsScript.points.Length)
+        if(index>= WaypointsScript.points.Length-1)
         {
             Destroy(gameObject);
             return;
         }
+
         index++;
         target = WaypointsScript.points[index];
     }
