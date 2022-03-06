@@ -19,12 +19,14 @@ public class TurretScript : MonoBehaviour
     void Update()
     {
         if (target == null) return;
-
-        //Turn head to closest enemy
-        Vector3 dir = target.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(Head.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-        Head.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
+        else
+        {
+            //Turn head to closest enemy
+            Vector3 dir = target.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            Vector3 rotation = Quaternion.Lerp(Head.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+            Head.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        }
     }
     void UpdateTarget()
     {
