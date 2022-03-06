@@ -15080,6 +15080,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torreta
       objectReference: {fileID: 0}
+    - target: {fileID: 7884161308182952138, guid: 4fe2a2c1e7fb459429f8339764e72a87, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fe2a2c1e7fb459429f8339764e72a87, type: 3}
 --- !u!1001 &5434372053717309968
