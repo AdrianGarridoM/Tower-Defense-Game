@@ -6,10 +6,14 @@ public class TurretScript : MonoBehaviour
 {
     public Transform Head;
     private Transform target;
-    private float range = 15f;
-    private float turnSpeed = 10f;
-    private float fireRate = 1f;
     private float fireCount = 0f;
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    [Header("Attributes")]
+    public float range = 20f;
+    private float turnSpeed = 15f;
+    public float fireRate = 1f;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +42,12 @@ public class TurretScript : MonoBehaviour
     }
     void Shoot()
     {
-
+        GameObject BulletObject = (GameObject) Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        BulletScript bullet = BulletObject.GetComponent<BulletScript>();
+        if(bullet != null)
+        {
+            bullet.Chase(target);
+        }
     }
     void UpdateTarget()
     {
