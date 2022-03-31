@@ -11,7 +11,7 @@ public class TurretScript : MonoBehaviour
     public Transform firePoint;
     [Header("Attributes")]
     public float range = 20f;
-    private float turnSpeed = 15f;
+    private float turnSpeed = 20f;
     public float fireRate = 1f;
    
 
@@ -40,6 +40,7 @@ public class TurretScript : MonoBehaviour
             fireCount -= Time.deltaTime;
         }
     }
+
     void Shoot()
     {
         GameObject BulletObject = (GameObject) Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);

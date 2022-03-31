@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
     public Transform Target;
+    float speed = 70f;
     public void Chase(Transform target)
     {
         Target = target;
@@ -16,5 +18,18 @@ public class BulletScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Vector3 dir = Target.position - transform.position;
+        float FrameDistance = speed * Time.deltaTime;
+        if(dir.magnitude <= FrameDistance)
+        {
+            HitEnemy();
+            return;
+        }
+        transform.Translate(dir.normalized * FrameDistance, Space.World);
+    }
+
+    private void HitEnemy()
+    {
+        Debug.Log("Enemy Hit");
     }
 }
