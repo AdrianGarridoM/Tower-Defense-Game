@@ -9,13 +9,11 @@ public class GMScript : MonoBehaviour
     public Transform spawnPoint;
     public Transform padre;
     private int wave = 0;
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (countDown <= 0)

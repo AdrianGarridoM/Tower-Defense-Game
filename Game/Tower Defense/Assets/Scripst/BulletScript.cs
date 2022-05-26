@@ -10,14 +10,12 @@ public class BulletScript : MonoBehaviour
     {
         Target = target;
     }
-    // Start is called before the first frame update
-    
-    // Update is called once per frame
     void Update()
     {
         if(Target == null)
         {
             Destroy(gameObject);
+            return;
         }
         Vector3 dir = Target.position - transform.position;
         float FrameDistance = speed * Time.deltaTime;

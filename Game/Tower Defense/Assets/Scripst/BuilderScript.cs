@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BuilderScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     public static BuilderScript buildInstance;
     public GameObject turret;
     private GameObject towerToBuild;
@@ -17,12 +16,12 @@ public class BuilderScript : MonoBehaviour
         }
         buildInstance = this;
     }
-    private void Start()
-    {
-        towerToBuild = turret;
-    }
     public GameObject GetTowerToBuild()
     {
         return towerToBuild;
+    }
+    public void SetTowerToBuild(GameObject tower)
+    {
+        towerToBuild = tower;
     }
 }

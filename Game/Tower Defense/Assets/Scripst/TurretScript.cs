@@ -13,15 +13,11 @@ public class TurretScript : MonoBehaviour
     public float range = 20f;
     private float turnSpeed = 20f;
     public float fireRate = 1f;
-   
-
-    // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (target == null) return;

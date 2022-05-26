@@ -8,13 +8,11 @@ public class EnemyScript : MonoBehaviour
     private Transform target;
     private int index = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
         target = WaypointsScript.points[index];    
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 dir = target.position - transform.position;
