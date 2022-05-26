@@ -5,6 +5,7 @@ public class BulletScript : MonoBehaviour
 {
     public Transform Target;
     float speed = 70f;
+    public GameObject impact;
     public void Chase(Transform target)
     {
         Target = target;
@@ -30,6 +31,9 @@ public class BulletScript : MonoBehaviour
 
     private void HitEnemy()
     {
-        Debug.Log("Enemy Hit");
+        GameObject impactEffect = (GameObject)Instantiate(impact, transform.position, transform.rotation);
+        Destroy(impactEffect, 1f);
+        Destroy(Target.gameObject);
+        Destroy(gameObject);
     }
 }
