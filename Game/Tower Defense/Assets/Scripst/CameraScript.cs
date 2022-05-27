@@ -11,7 +11,7 @@ public class CameraScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            move = false;
+            move = !move;
         }
         if (!move) 
         {

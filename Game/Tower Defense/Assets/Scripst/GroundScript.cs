@@ -6,16 +6,18 @@ using UnityEngine;
 public class GroundScript : MonoBehaviour
 {
     public Vector3 offset;
-    private GameObject turret;
+    public GameObject turret;
     private Renderer rend;
     private Color initColor;
     public Color hoverColor;
+    public Color noMoneyColor;
     BuilderScript builder;
     void Start()
     {
         rend = GetComponent<Renderer>();
         initColor = rend.material.color;
         builder = BuilderScript.buildInstance;
+        noMoneyColor = Color.red;
     }
     void OnMouseEnter()
     {
@@ -23,11 +25,19 @@ public class GroundScript : MonoBehaviour
         {
             return;
         }
-        if (builder.GetTowerToBuild() == null)
+        if (!builder.CanBuild)
         {
             return;
         }
-        rend.material.color = hoverColor;
+        if (builder.HasMoney)
+        {
+            rend.material.color = hoverColor;
+        }
+        else
+        {
+            rend.material.color = noMoneyColor;
+        }
+        
     }
     void OnMouseExit()
     {
@@ -39,7 +49,7 @@ public class GroundScript : MonoBehaviour
         {
             return;
         }
-        if (builder.GetTowerToBuild() == null)
+        if (!builder.CanBuild)
         {
             return;
         }
@@ -47,16 +57,9 @@ public class GroundScript : MonoBehaviour
         {
             //Inspect & Upgrade
             Debug.Log("There is already a tower here");
+            return;
         }
-        else
-        {
-            GameObject towerToBuild = builder.GetTowerToBuild();
-            if(towerToBuild.tag == "Turret")
-            {
-                turret = (GameObject)Instantiate(towerToBuild, transform.position + offset, transform.rotation);
-            }
-            
-        }
+        builder.BuildTowerOn(this);
 
     }
 }

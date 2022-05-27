@@ -7,7 +7,8 @@ public class EnemyScript : MonoBehaviour
     private float speed = 15f;
     private Transform target;
     private int index = 0;
-
+    private int health = 100;
+    public int value;
     void Start()
     {
         target = WaypointsScript.points[index];    
@@ -22,15 +23,33 @@ public class EnemyScript : MonoBehaviour
             NextWaypoint();
         }
     }
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Death();
+        }
+    }
     void NextWaypoint()
     {
         if(index>= WaypointsScript.points.Length-1)
         {
-            Destroy(gameObject);
+            EndReached();
             return;
         }
 
         index++;
         target = WaypointsScript.points[index];
+    }
+    void EndReached()
+    {
+        PlayerStats.UpdateLives(-1);
+        Death();
+    }
+    void Death()
+    {
+        PlayerStats.Money += value;
+        Destroy(gameObject);
     }
 }

@@ -109,4 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
+  speed: 70
   impact: {fileID: 6011551215598553799, guid: c0d38e9b7fe5cfa47974e4e0982ef09c, type: 3}
+  explosion: 0
+  damage: 25

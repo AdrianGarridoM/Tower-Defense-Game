@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1310893045105888677}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Enviroment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,4 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 0.48, z: 0}
+  turret: {fileID: 0}
   hoverColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+  noMoneyColor: {r: 0, g: 0, b: 0, a: 0}

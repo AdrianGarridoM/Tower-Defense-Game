@@ -130,8 +130,8 @@ MonoBehaviour:
   Head: {fileID: 7519429673150722687}
   bulletPrefab: {fileID: 3276864122500724233, guid: 04fac1886dae0ca4a9e7866c79d08b2d, type: 3}
   firePoint: {fileID: 7519429673644455713}
-  range: 60
-  fireRate: 1
+  range: 20
+  fireRate: 2
 --- !u!1 &7308926005861885838
 GameObject:
   m_ObjectHideFlags: 0

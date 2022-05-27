@@ -4,8 +4,10 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public Transform Target;
-    float speed = 70f;
+    public float speed;
     public GameObject impact;
+    public float explosion;
+    public int damage;
     public void Chase(Transform target)
     {
         Target = target;
@@ -25,13 +27,33 @@ public class BulletScript : MonoBehaviour
             return;
         }
         transform.Translate(dir.normalized * FrameDistance, Space.World);
+        transform.LookAt(Target);
     }
 
     private void HitEnemy()
     {
         GameObject impactEffect = (GameObject)Instantiate(impact, transform.position, transform.rotation);
         Destroy(impactEffect, 1f);
-        Destroy(Target.gameObject);
+        if (explosion > 0f)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, explosion);
+            foreach(Collider collider in colliders)
+            {
+                if(collider.tag == "Enemy")
+                {
+                    Damage(collider.transform);
+                }
+            }
+        }
+        else
+        {
+            Damage(Target.transform);
+        }
         Destroy(gameObject);
+    }
+    void Damage(Transform enemy)
+    {
+        EnemyScript e = enemy.GetComponent<EnemyScript>();
+        e.TakeDamage(damage);
     }
 }

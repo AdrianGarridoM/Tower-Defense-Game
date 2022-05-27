@@ -5,13 +5,22 @@ using UnityEngine;
 public class ShopScript : MonoBehaviour
 {
     BuilderScript builder;
+    public TowerBlueprint turretBlueprint;
+    public TowerBlueprint rocketBlueprint;
+    public TowerBlueprint laserBlueprint;
     private void Start()
     {
         builder = BuilderScript.buildInstance;
     }
-    public void PurchaseTurret()
+    public void SelectTurret()
     {
-        Debug.Log("Turret Purchased");
-        builder.SetTowerToBuild(builder.turret);
+        builder.SelectTowerToBuild(turretBlueprint);
+    }
+    public void SelectRocketLauncher()
+    {
+        builder.SelectTowerToBuild(rocketBlueprint);
+    }
+    public void SelectLaserBeamer(){
+        builder.SelectTowerToBuild(laserBlueprint);
     }
 }
