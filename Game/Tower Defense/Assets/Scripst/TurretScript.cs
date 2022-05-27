@@ -8,17 +8,22 @@ public class TurretScript : MonoBehaviour
    
     public Transform Head;
     private Transform target;
+    private EnemyScript targetEnemy;
     private float fireCount = 0f;
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float range = 20f;
     private float turnSpeed = 20f;
     public float fireRate = 1f;
+
     [Header("Laser")]
+    private int dot = 20;
     public bool useLaser = false;
     public LineRenderer Laser;
     public ParticleSystem LaserImpact;
+    public ParticleSystem Glow;
     public Light light;
+    private float slow = 0.5f;
 
     void Start()
     {
@@ -34,6 +39,7 @@ public class TurretScript : MonoBehaviour
                 Laser.enabled = false;
                 light.enabled = false;
                 LaserImpact.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                Glow.Pause();
             }
             return;
         }
@@ -59,11 +65,14 @@ public class TurretScript : MonoBehaviour
 
     private void LaserBeam()
     {
+        targetEnemy.TakeDamage(dot * Time.deltaTime);
+        targetEnemy.Slow(slow);
         if (!Laser.enabled)
         {
             Laser.enabled = true;
             light.enabled = true;
             LaserImpact.Play();
+            Glow.Play();
         }
         Laser.SetPosition(0, firePoint.position);
         Laser.SetPosition(1, target.position);
@@ -108,10 +117,12 @@ public class TurretScript : MonoBehaviour
         if(nearestEnemy !=null && shortDistance <= range)
         {
             target = nearestEnemy.transform;
+            targetEnemy = target.GetComponent<EnemyScript>();
         }
         else
         {
             target = null;
+            targetEnemy = null;
         }
     }
     private void OnDrawGizmosSelected()

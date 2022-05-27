@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    private float speed = 15f;
+    private float baseSpeed = 15f;
+    private float speed;
     private Transform target;
     private int index = 0;
-    private int health = 100;
+    public float health = 100;
     public int value;
+
     void Start()
     {
+        speed = baseSpeed;
         target = WaypointsScript.points[index];    
     }
 
@@ -22,14 +25,19 @@ public class EnemyScript : MonoBehaviour
         {
             NextWaypoint();
         }
+        speed = baseSpeed;
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)
         {
             Death();
         }
+    }
+    public void Slow(float slow)
+    {
+        speed = baseSpeed * slow;
     }
     void NextWaypoint()
     {

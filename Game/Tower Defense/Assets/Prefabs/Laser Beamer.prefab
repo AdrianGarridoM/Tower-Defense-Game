@@ -236,6 +236,7 @@ MonoBehaviour:
   useLaser: 1
   Laser: {fileID: 5249963621632567043}
   LaserImpact: {fileID: 8390184236338647789}
+  Glow: {fileID: 2470320093611161319}
   light: {fileID: 6069934607232571222}
 --- !u!1 &4040866297749778854
 GameObject:
