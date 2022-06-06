@@ -14,6 +14,8 @@ public class PauseMenuScript : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Pause();
+
     }
     public void Quit()
     {
@@ -31,4 +33,5 @@ public class PauseMenuScript : MonoBehaviour
             Time.timeScale = 1;
         }
     }
+
 }

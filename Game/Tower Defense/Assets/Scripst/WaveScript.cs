@@ -7,29 +7,35 @@ public class WaveScript : MonoBehaviour
     public Transform spawnPoint;
     public Transform padre;
     [HideInInspector]
-    public static int wave = 0;
-    public static int waveLimit = 5;
-    public static int count = 0;
+    public static int wave;
+    public static int waveLimit = 10;
+    public static int count;
  
+   
      IEnumerator SpawnWave()
     {
-        //MapBuilderScript;
+        wave++;
         for (int i = 0; i <= wave; i++)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(0.5f);
             count++;
         }
-        wave++;
+        
 
+    }
+    private void Awake()
+    {
+        wave = 0;
+        count = 0;
     }
     void SpawnEnemy()
     {
         if (wave == waveLimit)
         {
-            Instantiate(enemyPrefab[3], spawnPoint.position, spawnPoint.rotation).parent = padre.transform;
+            Instantiate(enemyPrefab[3], spawnPoint.position + new Vector3(0, 2, 0), enemyPrefab[3].rotation).parent = padre.transform;
         }
-        Instantiate(enemyPrefab[0], spawnPoint.position, spawnPoint.rotation).parent = padre.transform;
+        Instantiate(enemyPrefab[0], spawnPoint.position + new Vector3(0,2,0), enemyPrefab[0].rotation).parent = padre.transform;
     }
 
 

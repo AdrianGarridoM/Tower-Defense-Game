@@ -3,12 +3,13 @@ using UnityEngine;
 public class MapBuilderScript : MonoBehaviour
 {
     public GameObject MapUI;
-    GameObject lastMap;
-    Transform lastTile;
-    Transform midTile;
-    Transform waypoint;
-    Vector3 dir;
-    Vector3 rotation = new Vector3(0, 0, 0);
+    private GameObject lastMap;
+    private Transform lastTile;
+    private Transform midTile;
+    private Transform waypoint;
+    private Transform end;
+    private Vector3 dir;
+    private Vector3 rotation = new Vector3(0, 0, 0);
     public GameObject startPrefab;
     public GameObject endPrefab;
     public GameObject straightPrefab;
@@ -17,6 +18,7 @@ public class MapBuilderScript : MonoBehaviour
     private int count = 0;
     void Awake()
     {
+        ShowUI();
         lastMap = (GameObject)Instantiate(startPrefab, transform.position, transform.rotation);
         Next();
     }
@@ -34,10 +36,16 @@ public class MapBuilderScript : MonoBehaviour
         lastTile = lastMap.transform.Find("Last");
         waypoint = lastMap.transform.Find("Waypoint");
         midTile = lastMap.transform.Find("Middle");
+        end = lastMap.transform.Find("END");
         GMScript.waypoints.Insert(0, waypoint);
         dir = (lastTile.position - midTile.position).normalized;
         transform.position = lastTile.position + (dir*3);
         MapUI.transform.position = lastTile.position + (dir * 13);
+        if(end != null)
+        {
+            transform.position = end.position;
+            HideUI();
+        }
         count++;
     }
     GameObject ChooseRoute()
@@ -137,11 +145,19 @@ public class MapBuilderScript : MonoBehaviour
     {
         MapUI.SetActive(true);
     }
-    public void Update()
+    private void Update()
     {
-        if(WaveScript.count == 0)
+        Debug.Log(WaveScript.count);
+        if(WaveScript.count != 0)
         {
-            ShowUI();
+            HideUI();
+            return;
         }
+        if(end != null)
+        {
+            HideUI();
+            return;
+        }
+        ShowUI();
     }
 }
