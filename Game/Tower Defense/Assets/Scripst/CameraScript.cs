@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
     private bool move = true;
     private float scrollSpeed = 5;
-    private float speed = 20f;
+    private float speed = 40f;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             move = !move;
         }
-        if (!move) 
+        if (!move)
         {
             return;
         }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopScript : MonoBehaviour
@@ -20,7 +18,8 @@ public class ShopScript : MonoBehaviour
     {
         builder.SelectTowerToBuild(rocketBlueprint);
     }
-    public void SelectLaserBeamer(){
+    public void SelectLaserBeamer()
+    {
         builder.SelectTowerToBuild(laserBlueprint);
     }
 }

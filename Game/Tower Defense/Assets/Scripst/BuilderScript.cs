@@ -1,12 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuilderScript : MonoBehaviour
 {
     public static BuilderScript buildInstance;
     public GameObject buildEffect;
+    public TowerUIScript towerUI;
     private TowerBlueprint towerToBuild;
+    private GroundScript groundSelected;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            towerUI.Hide();
+            towerToBuild = null;
+            groundSelected = null;
+            return;
+        }
+    }
     private void Awake()
     {
         if (buildInstance != null)
@@ -16,34 +27,22 @@ public class BuilderScript : MonoBehaviour
         }
         buildInstance = this;
     }
+    public void SelectGround(GroundScript ground)
+    {
+        groundSelected = ground;
+        towerUI.SetGround(ground);
+        towerToBuild = null;
+    }
     public void SelectTowerToBuild(TowerBlueprint tower)
     {
         towerToBuild = tower;
+        groundSelected = null;
     }
     public bool CanBuild { get { return towerToBuild != null; } }
     public bool HasMoney { get { return PlayerStats.Money >= towerToBuild.cost; } }
 
-    public void BuildTowerOn(GroundScript ground)
+    public TowerBlueprint GetBlueprint()
     {
-        if (PlayerStats.Money < towerToBuild.cost)
-        {
-            return;
-        }
-        PlayerStats.Money -= towerToBuild.cost;
-        towerToBuild.cost += towerToBuild.addedCost;
-        towerToBuild.displayCost.text = towerToBuild.cost.ToString();
-        GameObject towerCheck = towerToBuild.tower;
-        if (towerCheck.tag == "Turret")
-        {
-            GameObject tower = (GameObject)Instantiate(towerToBuild.tower, ground.transform.position + ground.offset, Quaternion.identity);
-            ground.turret = tower;
-        }
-        else
-        {
-            GameObject tower = (GameObject)Instantiate(towerToBuild.tower, ground.transform.position, Quaternion.identity);
-            ground.turret = tower;
-        }
-        GameObject effect = (GameObject)Instantiate(buildEffect, ground.transform.position, Quaternion.identity);
-        Destroy(effect, 4f);
+        return towerToBuild;
     }
 }

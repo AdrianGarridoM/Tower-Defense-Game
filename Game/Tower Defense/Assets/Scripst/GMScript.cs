@@ -1,18 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GMScript : MonoBehaviour
 {
-    private bool gameOver = false;
+    public GameObject GOUI;
+    public GameObject PlayerUI;
+    public static bool gameOver = false;
     private void Update()
     {
         if (gameOver)
         {
             return;
         }
-        if (PlayerStats.Lives <= 0)
+        if (PlayerStats.Lives <= 0 || Input.GetKey(KeyCode.Space))
         {
             EndGame();
         }
@@ -21,6 +20,8 @@ public class GMScript : MonoBehaviour
     private void EndGame()
     {
         gameOver = true;
+        PlayerUI.SetActive(false);
+        GOUI.SetActive(true);
         Debug.Log("poner Fin");
     }
 }

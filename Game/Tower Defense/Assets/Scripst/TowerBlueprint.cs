@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,4 +9,5 @@ public class TowerBlueprint
     public int cost;
     public int addedCost;
     public Text displayCost;
+    public int upgradeCost;
 }

@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WaypointsScript : MonoBehaviour
 {
     public static Transform[] points;
+    public static List<Transform> waypoints = new List<Transform>();
 
     private void Awake()
     {

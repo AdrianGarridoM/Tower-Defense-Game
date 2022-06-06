@@ -1,28 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretScript : MonoBehaviour
 {
-   
+
     public Transform Head;
-    private Transform target;
-    private EnemyScript targetEnemy;
-    private float fireCount = 0f;
+
     public GameObject bulletPrefab;
     public Transform firePoint;
+
+
+    [HideInInspector]
+    public int level = 1;
     public float range = 20f;
     private float turnSpeed = 20f;
     public float fireRate = 1f;
+    private int damageUpgrade = 0;
+    private Transform target;
+    private EnemyScript targetEnemy;
+    private float fireCount = 0f;
 
     [Header("Laser")]
     private int dot = 20;
     public bool useLaser = false;
     public LineRenderer Laser;
     public ParticleSystem LaserImpact;
-    public ParticleSystem Glow;
-    public Light light;
     private float slow = 0.5f;
 
     void Start()
@@ -34,13 +35,15 @@ public class TurretScript : MonoBehaviour
     {
         if (target == null)
         {
-            if (Laser.enabled)
+            if (useLaser)
             {
-                Laser.enabled = false;
-                light.enabled = false;
-                LaserImpact.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-                Glow.Pause();
+                if (Laser.enabled)
+                {
+                    Laser.enabled = false;
+                    LaserImpact.gameObject.SetActive(false);
+                }
             }
+
             return;
         }
         else
@@ -70,9 +73,7 @@ public class TurretScript : MonoBehaviour
         if (!Laser.enabled)
         {
             Laser.enabled = true;
-            light.enabled = true;
-            LaserImpact.Play();
-            Glow.Play();
+            LaserImpact.gameObject.SetActive(true);
         }
         Laser.SetPosition(0, firePoint.position);
         Laser.SetPosition(1, target.position);
@@ -92,9 +93,10 @@ public class TurretScript : MonoBehaviour
 
     void Shoot()
     {
-        GameObject BulletObject = (GameObject) Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject BulletObject = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         BulletScript bullet = BulletObject.GetComponent<BulletScript>();
-        if(bullet != null)
+        bullet.IncreaseDamage(damageUpgrade * level);
+        if (bullet != null)
         {
             bullet.Chase(target);
         }
@@ -104,7 +106,7 @@ public class TurretScript : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         float shortDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
-        foreach(GameObject enemy in enemies)
+        foreach (GameObject enemy in enemies)
         {
             float dist = Vector3.Distance(transform.position, enemy.transform.position);
             if (shortDistance > dist)
@@ -114,7 +116,7 @@ public class TurretScript : MonoBehaviour
             }
 
         }
-        if(nearestEnemy !=null && shortDistance <= range)
+        if (nearestEnemy != null && shortDistance <= range)
         {
             target = nearestEnemy.transform;
             targetEnemy = target.GetComponent<EnemyScript>();
@@ -124,6 +126,11 @@ public class TurretScript : MonoBehaviour
             target = null;
             targetEnemy = null;
         }
+    }
+    public void IncreaseDamage(int damage)
+    {
+        damageUpgrade += damage;
+        dot += damage;
     }
     private void OnDrawGizmosSelected()
     {

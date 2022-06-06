@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
@@ -14,14 +13,14 @@ public class BulletScript : MonoBehaviour
     }
     void Update()
     {
-        if(Target == null)
+        if (Target == null)
         {
             Destroy(gameObject);
             return;
         }
         Vector3 dir = Target.position - transform.position;
         float FrameDistance = speed * Time.deltaTime;
-        if(dir.magnitude <= FrameDistance)
+        if (dir.magnitude <= FrameDistance)
         {
             HitEnemy();
             return;
@@ -37,9 +36,9 @@ public class BulletScript : MonoBehaviour
         if (explosion > 0f)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, explosion);
-            foreach(Collider collider in colliders)
+            foreach (Collider collider in colliders)
             {
-                if(collider.tag == "Enemy")
+                if (collider.tag == "Enemy")
                 {
                     Damage(collider.transform);
                 }
@@ -55,5 +54,9 @@ public class BulletScript : MonoBehaviour
     {
         EnemyScript e = enemy.GetComponent<EnemyScript>();
         e.TakeDamage(damage);
+    }
+    public void IncreaseDamage(int increase)
+    {
+        damage += increase;
     }
 }
