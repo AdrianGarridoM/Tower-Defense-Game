@@ -4,7 +4,7 @@ public class CameraScript : MonoBehaviour
 {
     private bool move = true;
     private float scrollSpeed = 5;
-    private float speed = 40f;
+    private float speed = 60f;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -36,7 +36,7 @@ public class CameraScript : MonoBehaviour
         Vector3 position = transform.position;
 
         position.y -= scroll * 1000 * scrollSpeed * Time.deltaTime;
-        position.y = Mathf.Clamp(position.y, 10f, 80f);
+        position.y = Mathf.Clamp(position.y, 10f, 140f);
         transform.position = position;
     }
 }

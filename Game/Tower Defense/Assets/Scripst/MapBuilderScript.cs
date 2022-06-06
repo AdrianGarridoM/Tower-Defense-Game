@@ -15,7 +15,7 @@ public class MapBuilderScript : MonoBehaviour
     public GameObject rightPrefab;
     public GameObject leftPrefab;
     private int count = 0;
-    void Start()
+    void Awake()
     {
         lastMap = (GameObject)Instantiate(startPrefab, transform.position, transform.rotation);
         Next();
@@ -26,6 +26,7 @@ public class MapBuilderScript : MonoBehaviour
         lastMap = (GameObject)Instantiate(prefab, (dir * 28) + lastMap.transform.position, transform.rotation);
         transform.eulerAngles = rotation;
         Next();
+        HideUI();
     }
 
     void Next()
@@ -33,11 +34,11 @@ public class MapBuilderScript : MonoBehaviour
         lastTile = lastMap.transform.Find("Last");
         waypoint = lastMap.transform.Find("Waypoint");
         midTile = lastMap.transform.Find("Middle");
-        WaypointsScript.waypoints.Add(waypoint);
+        GMScript.waypoints.Insert(0, waypoint);
         dir = (lastTile.position - midTile.position).normalized;
-        WaypointsScript.waypoints.Add(waypoint);
         transform.position = lastTile.position + (dir*3);
         MapUI.transform.position = lastTile.position + (dir * 13);
+        count++;
     }
     GameObject ChooseRoute()
     {
@@ -46,28 +47,29 @@ public class MapBuilderScript : MonoBehaviour
         Vector3 right = -left;
         GameObject prefab;
         int random = -1;
-        if(count == WaveScript.count)
+        if(count == WaveScript.waveLimit)
         {
+            rotation += new Vector3(0, -180, 0);
+            End();
             return endPrefab;
         }
         if (Physics.Raycast(transform.position, dir, 40f))
         {
-            Debug.Log("frente");
             frente = true;
         }
         if (Physics.Raycast(transform.position, left, 40f))
         {
-            Debug.Log("izquierda");
             izq = true;
         }
         if (Physics.Raycast(transform.position, right, 40f))
         {
-            Debug.Log("derecha");
             der = true;
         }
 
         if (frente && izq && der)
         {
+            rotation += new Vector3(0, -180, 0);
+            End();
             return endPrefab;
         }
 
@@ -120,5 +122,26 @@ public class MapBuilderScript : MonoBehaviour
             prefab = straightPrefab;
         }
         return prefab;
+    }
+
+    private void End()
+    {
+        transform.eulerAngles = rotation;
+        MapUI.SetActive(false);
+    }
+    private void HideUI()
+    {
+        MapUI.SetActive(false);
+    }
+    public void ShowUI()
+    {
+        MapUI.SetActive(true);
+    }
+    public void Update()
+    {
+        if(WaveScript.count == 0)
+        {
+            ShowUI();
+        }
     }
 }

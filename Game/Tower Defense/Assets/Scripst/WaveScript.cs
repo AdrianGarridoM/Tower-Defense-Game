@@ -3,33 +3,17 @@ using UnityEngine;
 
 public class WaveScript : MonoBehaviour
 {
-    private float countDown = 3;
     public Transform[] enemyPrefab;
     public Transform spawnPoint;
     public Transform padre;
+    [HideInInspector]
     public static int wave = 0;
-    private int waveLimit = 14;
+    public static int waveLimit = 5;
     public static int count = 0;
-    void Start()
+ 
+     IEnumerator SpawnWave()
     {
-
-    }
-
-    void Update()
-    {
-        if (count == 0)
-        {
-            if (countDown <= 0)
-            {
-                StartCoroutine(SpawnWave());
-                countDown = 2f + wave;
-            }
-            countDown -= Time.deltaTime;
-        }
-    }
-    IEnumerator SpawnWave()
-    {
-
+        //MapBuilderScript;
         for (int i = 0; i <= wave; i++)
         {
             SpawnEnemy();
@@ -46,5 +30,11 @@ public class WaveScript : MonoBehaviour
             Instantiate(enemyPrefab[3], spawnPoint.position, spawnPoint.rotation).parent = padre.transform;
         }
         Instantiate(enemyPrefab[0], spawnPoint.position, spawnPoint.rotation).parent = padre.transform;
+    }
+
+
+    public void StartWave()
+    {
+       StartCoroutine(SpawnWave());
     }
 }

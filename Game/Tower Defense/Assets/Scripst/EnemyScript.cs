@@ -18,7 +18,7 @@ public class EnemyScript : MonoBehaviour
     {
         health = starthealth;
         speed = baseSpeed;
-        target = WaypointsScript.points[index];
+        target = GMScript.waypoints[index];
     }
 
     void Update()
@@ -54,14 +54,14 @@ public class EnemyScript : MonoBehaviour
     }
     void NextWaypoint()
     {
-        if (index >= WaypointsScript.points.Length - 1)
+        if (index >= GMScript.waypoints.Count-1)
         {
             EndReached();
             return;
         }
 
         index++;
-        target = WaypointsScript.points[index];
+        target = GMScript.waypoints[index];
     }
     void EndReached()
     {
