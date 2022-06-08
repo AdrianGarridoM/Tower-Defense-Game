@@ -20,6 +20,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Quit()
     {
         SceneManager.LoadScene("MainMenu");
+        Pause();
     }
     public void Pause()
     {

@@ -8,7 +8,8 @@ public class TurretScript : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
 
-
+    public static bool bleed;
+    public static bool frost;
     [HideInInspector]
     public int level = 1;
     public float range = 20f;
@@ -20,11 +21,11 @@ public class TurretScript : MonoBehaviour
     private float fireCount = 0f;
 
     [Header("Laser")]
-    private int dot = 20;
+    private int dot = 30;
     public bool useLaser = false;
     public LineRenderer Laser;
     public ParticleSystem LaserImpact;
-    private float slow = 0.5f;
+    private float slow = 0.005f;
 
     void Start()
     {
@@ -96,6 +97,8 @@ public class TurretScript : MonoBehaviour
         GameObject BulletObject = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         BulletScript bullet = BulletObject.GetComponent<BulletScript>();
         bullet.IncreaseDamage(damageUpgrade * level);
+        bullet.frost = frost;
+        bullet.bleed = bleed;
         if (bullet != null)
         {
             bullet.Chase(target);

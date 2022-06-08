@@ -14,14 +14,39 @@ public class WaveScript : MonoBehaviour
    
      IEnumerator SpawnWave()
     {
+        MapBuilderScript.done = false;
         wave++;
+        if(wave == 1 || wave == 6)
+        {
+            MapBuilderScript.done2 = true;
+        }
         for (int i = 0; i <= wave; i++)
         {
-            SpawnEnemy();
+            SpawnEnemy(enemyPrefab[0]);
             yield return new WaitForSeconds(0.5f);
             count++;
         }
-        
+        if (wave >= 3)
+        {
+            for(int i = 0; i <= wave / 2; i++)
+            {
+                SpawnEnemy(enemyPrefab[1]);
+            }
+        }
+        if (wave >= 6)
+        {
+            for (int i = 0; i <= wave / 3; i++)
+            {
+                SpawnEnemy(enemyPrefab[2]);
+                yield return new WaitForSeconds(0.5f);
+                count++;
+            }
+        }
+        if (wave % 10 == 0)
+        {
+            SpawnEnemy(enemyPrefab[3]);
+            count++;
+        }
 
     }
     private void Awake()
@@ -29,13 +54,9 @@ public class WaveScript : MonoBehaviour
         wave = 0;
         count = 0;
     }
-    void SpawnEnemy()
+    void SpawnEnemy(Transform enemy)
     {
-        if (wave == waveLimit)
-        {
-            Instantiate(enemyPrefab[3], spawnPoint.position + new Vector3(0, 2, 0), enemyPrefab[3].rotation).parent = padre.transform;
-        }
-        Instantiate(enemyPrefab[0], spawnPoint.position + new Vector3(0,2,0), enemyPrefab[0].rotation).parent = padre.transform;
+        Instantiate(enemy, spawnPoint.position + new Vector3(0,2,0), enemy.rotation).parent = padre.transform;
     }
 
 

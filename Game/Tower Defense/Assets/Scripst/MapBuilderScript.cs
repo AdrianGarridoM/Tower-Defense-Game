@@ -3,11 +3,14 @@ using UnityEngine;
 public class MapBuilderScript : MonoBehaviour
 {
     public GameObject MapUI;
+    public GameObject RewardUI;
     private GameObject lastMap;
     private Transform lastTile;
     private Transform midTile;
     private Transform waypoint;
     private Transform end;
+    public static bool done;
+    public static bool done2;
     private Vector3 dir;
     private Vector3 rotation = new Vector3(0, 0, 0);
     public GameObject startPrefab;
@@ -18,6 +21,8 @@ public class MapBuilderScript : MonoBehaviour
     private int count = 0;
     void Awake()
     {
+        done = true;
+        done2 = false;
         ShowUI();
         lastMap = (GameObject)Instantiate(startPrefab, transform.position, transform.rotation);
         Next();
@@ -147,16 +152,15 @@ public class MapBuilderScript : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(WaveScript.count);
-        if(WaveScript.count != 0)
+        if(!done || end != null)
         {
             HideUI();
             return;
         }
-        if(end != null)
+        if (done && done2)
         {
-            HideUI();
-            return;
+            RewardUI.GetComponent<UpgradesScript>().Show();
+            done2 = false;
         }
         ShowUI();
     }

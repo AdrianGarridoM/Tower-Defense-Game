@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
+    public bool bleed;
+    public bool frost;
     public Transform Target;
     public float speed;
     public GameObject impact;
@@ -54,6 +56,14 @@ public class BulletScript : MonoBehaviour
     {
         EnemyScript e = enemy.GetComponent<EnemyScript>();
         e.TakeDamage(damage);
+        if (bleed)
+        {
+            e.BleedDamage(damage/4);
+        }
+        if (frost)
+        {
+            e.FrostDamage(damage/4);
+        }
     }
     public void IncreaseDamage(int increase)
     {

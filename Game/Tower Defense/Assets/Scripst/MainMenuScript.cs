@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-
+  
     public void Play()
     {
         SceneManager.LoadScene("MainScene");

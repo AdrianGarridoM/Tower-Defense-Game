@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 public class EnemyScript : MonoBehaviour
 {
+    private float bleedLimit;
+    private float frostLimit;
+    private float bleed;
+    private float frost;
     public float baseSpeed;
     private float speed;
     private Transform target;
@@ -16,6 +20,10 @@ public class EnemyScript : MonoBehaviour
 
     void Start()
     {
+        bleed = 0;
+        frost = 0;
+        bleedLimit = 50;
+        frostLimit = 50;
         health = starthealth;
         speed = baseSpeed;
         target = GMScript.waypoints[index];
@@ -29,7 +37,18 @@ public class EnemyScript : MonoBehaviour
         {
             NextWaypoint();
         }
-        speed = baseSpeed;
+        if (speed < baseSpeed)
+        {
+            speed += 2 * Time.deltaTime;
+        }
+        if (bleed > 0)
+        {
+            bleed -= 1 * Time.deltaTime;
+        }
+        if (frost > 0)
+        {
+            frost -= 1 * Time.deltaTime;
+        }
     }
     public void TakeDamage(float damage)
     {
@@ -37,20 +56,37 @@ public class EnemyScript : MonoBehaviour
         HealthBar.fillAmount = health / starthealth;
         if (health <= 0)
         {
+            PlayerStats.Money += value;
             Death();
         }
     }
     public void BleedDamage(float damage)
     {
-
+        bleed += damage;
+        BleedBar.fillAmount = bleed/bleedLimit;
+        if(bleed >= bleedLimit)
+        {
+            TakeDamage(starthealth / 2);
+            bleed = 0;
+            bleedLimit += 10;
+        }
     }
     public void FrostDamage(float damage)
     {
-
+        frost += damage;
+        FrostBar.fillAmount = frost / frostLimit;
+        Slow(0.1f);
+        if (frost >= frostLimit)
+        {
+            TakeDamage(starthealth / 3);
+            frost = 0;
+            frostLimit += 10;
+        }
     }
     public void Slow(float slow)
     {
-        speed = baseSpeed * slow;
+        Mathf.Clamp(speed, 8, 60);
+        speed -= speed * slow;
     }
     void NextWaypoint()
     {
@@ -66,13 +102,16 @@ public class EnemyScript : MonoBehaviour
     void EndReached()
     {
         PlayerStats.UpdateLives(-1);
-        Destroy(gameObject);
-        WaveScript.count--;
+        Death();
+        
     }
     void Death()
     {
-        PlayerStats.Money += value;
         Destroy(gameObject);
         WaveScript.count--;
+        if(WaveScript.count == 0)
+        {
+            MapBuilderScript.done = true;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class GroundScript : MonoBehaviour
     BuilderScript builder;
     public GameObject buildEffect;
     private TowerBlueprint blueprint;
+    
     void Start()
     {
         rend = GetComponent<Renderer>();

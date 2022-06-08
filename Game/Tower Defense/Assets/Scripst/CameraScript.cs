@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraScript : MonoBehaviour
 {
     private bool move = true;
-    private float scrollSpeed = 5;
+    private float scrollSpeed = 10;
     private float speed = 60f;
     void Update()
     {
